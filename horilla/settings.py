@@ -41,10 +41,11 @@ SECRET_KEY = env("SECRET_KEY", "django-insecure-j8op9)1q8$1&0^s&p*_0%d#pr@w9qj@1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG", False)
 
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS","*")
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS",["*"])
 
-CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS","http://localhost:8000")
+CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS",["http://localhost:8000"])
 print(env.str('CSRF_TRUSTED_ORIGINS', multiline=True))
+print(env.str('SECRET_KEY', multiline=True))
 # Application definition
 
 INSTALLED_APPS = [
