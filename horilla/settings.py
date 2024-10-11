@@ -29,8 +29,8 @@ env = environ.Env(
         str,
         "django-insecure-j8op9)1q8$1&0^s&p*_0%d#pr@w9qj@1o=3#@d=a(^@9@zd@%j",
     ),
-    ALLOWED_HOSTS=(list, ["*"]),
-    CSRF_TRUSTED_ORIGINS=(list, ["http://localhost:8000"]),
+    ALLOWED_HOSTS=(str, "*"),
+    CSRF_TRUSTED_ORIGINS=(str, "http://localhost:8000"),
 )
 
 env.read_env(os.path.join(BASE_DIR, "stack.env"), overwrite=True)
@@ -41,7 +41,9 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")
 
-ALLOWED_HOSTS = env("ALLOWED_HOSTS")
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
+
+CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS")
 
 # Application definition
 
