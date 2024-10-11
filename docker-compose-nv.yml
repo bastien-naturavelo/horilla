@@ -6,9 +6,15 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8000:8000
+    networks:
+      - app_network
     restart: unless-stopped
     environment:
       DATABASE_URL: ${DATABASE_URL}
     command: ./entrypoint.sh
 volumes:
   horilla-data:
+networks:
+  app_network:
+    external: true
+    name: app_network
