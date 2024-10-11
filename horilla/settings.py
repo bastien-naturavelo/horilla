@@ -24,27 +24,27 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 env = environ.Env(
-    DEBUG=(bool, True),
-    SECRET_KEY=(
-        str,
-        "django-insecure-j8op9)1q8$1&0^s&p*_0%d#pr@w9qj@1o=3#@d=a(^@9@zd@%j",
-    ),
-    ALLOWED_HOSTS=(str, "*"),
-    CSRF_TRUSTED_ORIGINS=(str, "http://localhost:8000"),
+    DEBUG=(bool, False),
+#    SECRET_KEY=(
+#        str,
+#        "django-insecure-j8op9)1q8$1&0^s&p*_0%d#pr@w9qj@1o=3#@d=a(^@9@zd@%j",
+#    ),
+#    ALLOWED_HOSTS=(str, "*"),
+#    CSRF_TRUSTED_ORIGINS=(str, "http://localhost:8000"),
 )
 
-env.read_env(os.path.join(BASE_DIR, "stack.env"), overwrite=True)
+environ.Env.read_env(os.path.join(BASE_DIR, "stack.env"), overwrite=True)
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env("SECRET_KEY")
+SECRET_KEY = env("SECRET_KEY", "django-insecure-j8op9)1q8$1&0^s&p*_0%d#pr@w9qj@1o=3#@d=a(^@9@zd@%j")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env("DEBUG")
+DEBUG = env("DEBUG", False)
 
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS","*")
 
-CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS")
-
+CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS","http://localhost:8000")
+print(env.str('CSRF_TRUSTED_ORIGINS', multiline=True))
 # Application definition
 
 INSTALLED_APPS = [
