@@ -6221,7 +6221,7 @@ msgstr "Ma Fréquentation"
 #, fuzzy
 #| msgid "Dashboard"
 msgid "leave-dashboard"
-msgstr "Tableaubord"
+msgstr "Tableau de bord"
 
 #: base/translator.py:222
 msgid "leave-employee-dashboard"
@@ -6271,7 +6271,7 @@ msgstr "Congé D'entreprise"
 #, fuzzy
 #| msgid "Dashboard View"
 msgid "dashboard-view"
-msgstr "Tableaubord Voir"
+msgstr "Tableau de bord Voir"
 
 #: base/translator.py:231
 #, fuzzy
@@ -8044,7 +8044,7 @@ msgstr "Toutes Congé Demandes"
 #, fuzzy
 #| msgid "Dashboard"
 msgid "View Admin Dashboard"
-msgstr "Tableaubord"
+msgstr "Tableau de bord"
 
 #: leave/templates/leave/holiday/holiday.html:9
 #, fuzzy
