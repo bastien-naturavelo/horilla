@@ -33,25 +33,19 @@ msgstr "Une catégorie pour tous les types d'ordinateurs portables."
 
 #: asset/forms.py:179
 msgid "Requesting a laptop for software development purposes."
-msgstr ""
-"Demande d'un ordinateur portable à des fins de développement de logiciels."
+msgstr "Demande d'un ordinateur portable à des fins de développement de logiciels."
 
 #: asset/forms.py:273
 msgid "on returns the laptop. However, it has suffered minor damage."
-msgstr ""
-"On ramène l'ordinateur portable. Cependant, il a subi des dommages mineurs."
+msgstr "Retour de l'ordinateur portable. Cependant, il a subi des dommages mineurs."
 
 #: asset/forms.py:285
 msgid "Return date cannot be in the future."
 msgstr "La date de retour ne peut pas être futur."
 
 #: asset/forms.py:316
-msgid ""
-"A batch of 50 laptops, consisting of Lenovo ThinkPad "
-"T480s                              and Dell XPS 13."
-msgstr ""
-"Un lot de 50 ordinateurs portables, composé de Lenovo ThinkPad T480 et de "
-"Dell XPS 13."
+msgid "A batch of 50 laptops, consisting of Lenovo ThinkPad T480s and Dell XPS 13."
+msgstr "Un lot de 50 ordinateurs portables, composé de Lenovo ThinkPad T480 et de Dell XPS 13."
 
 #: asset/models.py:45
 #: asset/templates/request_allocation/asset_request_allocation_list.html:78
@@ -1726,7 +1720,7 @@ msgstr "Créer une demande"
 
 #: asset/templates/request_allocation/asset_request_allocation_view.html:289
 msgid "Create allocation"
-msgstr "Créer une attribution"
+msgstr "Créer une indemnité"
 
 #: asset/templates/request_allocation/group_by.html:205
 #: asset/templates/request_allocation/group_by.html:351
@@ -5586,7 +5580,7 @@ msgstr "DEMANDES DE TYPE TRAVAIL"
 
 #: base/translator.py:93
 msgid "Single"
-msgstr "Célibataire
+msgstr "Célibataire"
 
 #: base/translator.py:94
 msgid "Married"
@@ -5733,7 +5727,8 @@ msgstr "Responsable direct"
 #: base/translator.py:132
 #, fuzzy
 #| msgid "Previous Shift"
-msgid "PQuart Précédent"
+msgid "Previous shift"
+msgstr "Quart Précédent"
 
 #: base/translator.py:133
 msgid "Gte"
@@ -6099,7 +6094,7 @@ msgstr "Entretien"
 
 #: base/translator.py:200
 msgid "view-onboarding-dashboard"
-msgstr "Tableau de bord d'intégration"
+msgstr "Tableau de bord"
 
 #: base/translator.py:201
 #, fuzzy
@@ -6141,23 +6136,23 @@ msgstr "Demande de type de travail ajoutée."
 #, fuzzy
 #| msgid "Rotating shift assigned."
 msgid "rotating-shift-assign"
-msgstr "shift rotatif attribué."
+msgstr "Rotation de quart attribué."
 
 #: base/translator.py:208
 #, fuzzy
 #| msgid "Rotating work type assigned."
 msgid "rotating-work-type-assign"
-msgstr "Type de travail rotatif attribué."
+msgstr "Rotation type de travail attribué."
 
 #: base/translator.py:209
 msgid "view-payroll-dashboard"
-msgstr ""
+msgstr "Tableau de bord salaire"
 
 #: base/translator.py:210
 #, fuzzy
 #| msgid "Contract"
 msgid "view-contract"
-msgstr "Contracter"
+msgstr "Contrats"
 
 #: base/translator.py:211
 #, fuzzy
@@ -6209,7 +6204,7 @@ msgstr "Activité de Fréquentation"
 
 #: base/translator.py:219
 msgid "late-come-early-out-view"
-msgstr ""
+msgstr "Retard / Départ anticipé"
 
 #: base/translator.py:220
 #, fuzzy
@@ -6225,7 +6220,7 @@ msgstr "Tableau de bord"
 
 #: base/translator.py:222
 msgid "leave-employee-dashboard"
-msgstr ""
+msgstr "Tableau de bord absences"
 
 #: base/translator.py:223
 #, fuzzy
@@ -6235,7 +6230,7 @@ msgstr "D'utilisateur Congé"
 
 #: base/translator.py:224
 msgid "user-request-view"
-msgstr ""
+msgstr "Requête"
 
 #: base/translator.py:225
 #, fuzzy
@@ -6307,7 +6302,7 @@ msgstr "Actifs Catégorie"
 #, fuzzy
 #| msgid "Request and Allocation"
 msgid "asset-request-allocation-view"
-msgstr "Demande et Allocation"
+msgstr "Demandes de ressources"
 
 #: base/views.py:141
 msgid "Invalid username or password."
@@ -6557,8 +6552,7 @@ msgstr "shift rotatif attribué."
 
 #: base/views.py:1548
 msgid "You cannot delete this rotating shift assign."
-msgstr ""
-"Vous ne pouvez pas supprimer cette affectation de quart de travail rotatif."
+msgstr "Vous ne pouvez pas supprimer cette affectation de quart de travail rotatif."
 
 #: base/views.py:1566
 msgid "Employee permission assigned."
@@ -6597,9 +6591,7 @@ msgstr "Vous ne pouvez pas supprimer cette demande de type de travail."
 #: base/views.py:2066
 #, python-brace-format
 msgid "You cannot delete {employee} work type request for the date {date}."
-msgstr ""
-"Vous ne pouvez pas supprimer la demande de type de travail {employee} pour "
-"la date {date}."
+msgstr "Vous ne pouvez pas supprimer la demande de type de travail de {employee} pour la date {date}."
 
 #: base/views.py:2123
 msgid "Request Added"
@@ -6634,9 +6626,7 @@ msgstr "Demande de quart de travail supprimée."
 #: base/views.py:2530
 #, python-brace-format
 msgid "You cannot delete {employee} shift request for the date {date}."
-msgstr ""
-"Vous pouvez  pas supprimer demande {employee} quart travail pore la date "
-"{date}."
+msgstr "Vous pouvez pas supprimer demande de quart de {employee} pour la date {date}."
 
 #: base/views.py:2560
 msgid "Unread notifications removed."
@@ -6680,7 +6670,7 @@ msgstr "Nom d'utilisateur"
 #: employee/templates/employee_filters.html:10 onboarding/forms.py:264
 #: onboarding/templates/onboarding/employee_creation.html:58
 msgid "First Name"
-msgstr "D'abord Nom"
+msgstr "Prénom"
 
 #: employee/models.py:65
 #: employee/templates/employee/create_form/personal_info.html:73
@@ -6690,17 +6680,17 @@ msgstr "D'abord Nom"
 #: employee/templates/employee_filters.html:25 onboarding/forms.py:265
 #: onboarding/templates/onboarding/employee_creation.html:65
 msgid "Last Name"
-msgstr "Dernier Nom"
+msgstr "Nom de famille"
 
 #: employee/templates/employee/create_form/form_view.html:8
 msgid "New People"
-msgstr "De nouvelles personnes"
+msgstr "Nouvelle personne"
 
 #: employee/templates/employee/create_form/form_view.html:13
 #: employee/templates/employee/profile/profile.html:22
 #: employee/templates/employee/update_form/form_view.html:12
 msgid "Personal Info"
-msgstr "Info personnelles"
+msgstr "Informations personnelles"
 
 #: employee/templates/employee/create_form/personal_info.html:37
 #: employee/templates/employee/profile/personal_info.html:167
@@ -6781,7 +6771,7 @@ msgstr "Téléphone"
 #: recruitment/templates/candidate/candidate_create_form.html:103
 #: recruitment/templates/candidate/individual.html:158
 msgid "Date of Birth"
-msgstr "Date of Birth"
+msgstr "Date de naissance"
 
 #: employee/templates/employee/create_form/personal_info.html:137
 #: employee/templates/employee/profile/personal_info.html:93
@@ -6797,13 +6787,13 @@ msgstr "Code Postal"
 #: employee/templates/employee/update_form/personal_info.html:123
 #: employee/templates/tabs/personal-tab.html:94
 msgid "Emergency Contact"
-msgstr "D'urgence Contact"
+msgstr "Contact d'urgence"
 
 #: employee/templates/employee/create_form/personal_info.html:149
 #: employee/templates/employee/profile/personal_info.html:105
 #: employee/templates/employee/update_form/personal_info.html:128
 msgid "Contact Name"
-msgstr "Contact Nom"
+msgstr "Nom du contact"
 
 #: employee/templates/employee/create_form/personal_info.html:156
 #: employee/templates/employee/profile/personal_info.html:112
@@ -6811,7 +6801,7 @@ msgstr "Contact Nom"
 #: employee/templates/tabs/personal-tab.html:112 onboarding/forms.py:281
 #: onboarding/templates/onboarding/employee_creation.html:167
 msgid "Emergency Contact Relation"
-msgstr "D'urgence Contact Relation"
+msgstr "Relation avec le contact en cas d'urgence"
 
 #: employee/templates/employee/create_form/personal_info.html:161
 #: employee/templates/employee/profile/personal_info.html:117
@@ -6827,7 +6817,7 @@ msgstr "Expérience"
 #: employee/templates/employee/update_form/personal_info.html:148
 #: employee/templates/tabs/personal-tab.html:78
 msgid "Maritial Status"
-msgstr "Matrimonial État"
+msgstr "État Matrimonial"
 
 #: employee/templates/employee/create_form/personal_info.html:174
 #: employee/templates/employee/profile/personal_info.html:130
@@ -6842,14 +6832,14 @@ msgstr "Enfants"
 #: onboarding/templates/onboarding/employee_bank_details.html:72
 #: payroll/forms/component_forms.py:254
 msgid "Bank Name"
-msgstr "Banque Nom"
+msgstr "Nom de la banque"
 
 #: employee/templates/employee/profile/bank_info.html:17
 #: employee/templates/employee/update_form/bank_details.html:17
 #: employee/templates/tabs/personal-tab.html:345
 #: payroll/forms/component_forms.py:256
 msgid "Account Number"
-msgstr "Compte Numéro"
+msgstr "Numéro de compte"
 
 #: employee/templates/employee/profile/bank_info.html:26
 #: employee/templates/employee/update_form/bank_details.html:25
@@ -6857,7 +6847,7 @@ msgstr "Compte Numéro"
 #: onboarding/templates/onboarding/employee_bank_details.html:86
 #: payroll/forms/component_forms.py:255
 msgid "Branch"
-msgstr "Bifurquer"
+msgstr "Succursale"
 
 #: employee/templates/employee/profile/bank_info.html:33
 #: employee/templates/employee/profile/bank_info.html:74
@@ -6868,13 +6858,13 @@ msgstr "Bifurquer"
 #: onboarding/templates/onboarding/employee_bank_details.html:125
 #: onboarding/templates/onboarding/employee_bank_details.html:132
 msgid "Bank Code"
-msgstr "Bancaire Code"
+msgstr "Code bancaire"
 
 #: employee/templates/employee/profile/bank_info.html:42
 #: employee/templates/employee/update_form/bank_details.html:39
 #: employee/templates/tabs/personal-tab.html:323
 msgid "Bank Address"
-msgstr "Banque Adresse"
+msgstr "Adresse de la banque"
 
 #: employee/templates/employee/profile/personal_info.html:186
 #: employee/templates/employee/profile/profile_modal.html:31
@@ -6892,13 +6882,13 @@ msgstr "Mettre à jour l'image"
 #: employee/templates/employee/profile/profile.html:9
 #: recruitment/templates/candidate/candidate_card.html:62
 msgid "Edit Profile"
-msgstr "Modifier Profil"
+msgstr "Modifier le profil"
 
 #: employee/templates/employee/profile/profile.html:31
 #: employee/templates/employee/update_form/form_view.html:18
 #: employee/templates/employee_personal_info/employee_work_info.html:101
 msgid "Bank Info"
-msgstr "Banque Info"
+msgstr "Info bancaire"
 
 #: employee/templates/employee/profile/profile_view.html:85
 #: employee/templates/employee/profile/work_info.html:69
@@ -6907,12 +6897,12 @@ msgstr "Banque Info"
 #: employee/templates/employee_personal_info/employee_list.html:74
 #: employee/templates/employee_personal_info/group_by.html:48
 msgid "Work Email"
-msgstr "Travail Email"
+msgstr "Email pro"
 
 #: employee/templates/employee/profile/profile_view.html:100
 #: employee/templates/employee/view/individual.html:115
 msgid "Work Phone"
-msgstr "Travail Téléphone"
+msgstr "Téléphone pro"
 
 #: employee/templates/employee/profile/profile_view.html:128
 #: employee/templates/employee/view/individual.html:142
@@ -6925,13 +6915,13 @@ msgstr "À propos"
 #, fuzzy
 #| msgid "Work type"
 msgid "Work type & Shift"
-msgstr "Type de travail"
+msgstr "Type de travail & quart"
 
 #: employee/templates/employee/profile/profile_view.html:160
 #: employee/templates/employee/view/individual.html:173
 #: templates/sidebar.html:463
 msgid "Leave"
-msgstr "Partir"
+msgstr "Absence"
 
 #: employee/templates/employee/profile/profile_view.html:169
 #: employee/templates/employee/view/individual.html:182
@@ -6943,7 +6933,7 @@ msgstr "Paie"
 #: employee/templates/employee/view/individual.html:212
 #: templates/sidebar.html:640
 msgid "Assets"
-msgstr "Actifs"
+msgstr "Ressources"
 
 #: employee/templates/employee/profile/profile_view.html:212
 #: employee/templates/employee/view/individual.html:223
@@ -6954,13 +6944,13 @@ msgstr "Performance"
 #: employee/templates/employee/profile/work_info.html:7
 #: employee/templates/employee/update_form/work_details.html:12
 msgid "Job Title"
-msgstr "Emploi Titre"
+msgstr "Titre de l'emploi"
 
 #: employee/templates/employee/profile/work_info.html:21
 #: employee/templates/employee/update_form/work_details.html:26
 #: employee/templates/tabs/personal-tab.html:170
 msgid "Shift Information"
-msgstr "Quarts Informations"
+msgstr "Informations sur le quart"
 
 #: employee/templates/employee/profile/work_info.html:77
 #: employee/templates/employee/update_form/work_details.html:82
@@ -6971,12 +6961,12 @@ msgstr "Quarts Informations"
 #: onboarding/templates/onboarding/single_view.html:43
 #: onboarding/templates/onboarding/table.html:12 recruitment/models.py:275
 msgid "Joining Date"
-msgstr "Date d'inscription"
+msgstr "Date d'entrée"
 
 #: employee/templates/employee/profile/work_info.html:83
 #: employee/templates/employee/update_form/work_details.html:88
 msgid "Contract End Date"
-msgstr "Contracter Date Fin"
+msgstr "Date de fin de contrat"
 
 #: employee/templates/employee/profile/work_info.html:91
 #: employee/templates/employee/update_form/work_details.html:96
@@ -6984,7 +6974,7 @@ msgstr "Contracter Date Fin"
 #: payroll/templates/payroll/contract/contract_list.html:24
 #: payroll/templates/payroll/contract/group_by.html:40
 msgid "Basic Salary"
-msgstr "Basique Salaire"
+msgstr "Salaire de base"
 
 #: employee/templates/employee/profile/work_info.html:97
 #: employee/templates/employee/update_form/work_details.html:102
@@ -6994,7 +6984,7 @@ msgstr "Salaire par heure"
 #: employee/templates/employee/view/individual.html:201
 #: recruitment/templates/candidate/individual.html:125
 msgid "History"
-msgstr "Histoire"
+msgstr "Historique"
 
 #: employee/templates/employee_nav.html:40
 msgid "Import Employee"
@@ -7005,7 +6995,7 @@ msgstr "Importer Employé"
 #, fuzzy
 #| msgid "Import Employee"
 msgid "Export Employees"
-msgstr "Importer Employé"
+msgstr "Importer les employés"
 
 #: employee/templates/employee_nav.html:196
 #: onboarding/templates/onboarding/kanban/kanban.html:37
@@ -7070,18 +7060,18 @@ msgstr "L'employé n'a pas de type de congé."
 #, fuzzy
 #| msgid "Specific Employees"
 msgid "Select All Employees"
-msgstr "Employés spécifiques"
+msgstr "Sélectionner tous les employés"
 
 #: employee/templates/employee_personal_info/employee_list.html:21
 #, fuzzy
 #| msgid "Exclude Employees"
 msgid "Unselect All Employees"
-msgstr "Exclure les employés"
+msgstr "Désélectionner tous les employés"
 
 #: employee/templates/employee_personal_info/employee_list.html:80
 #: employee/templates/employee_personal_info/group_by.html:49
 msgid "Date of Joining"
-msgstr "Date de Joindre"
+msgstr "Date d'entrée"
 
 #: employee/templates/employee_personal_info/employee_list.html:220
 #: employee/templates/employee_personal_info/group_by.html:197
@@ -7098,13 +7088,13 @@ msgstr "Info"
 #, fuzzy
 #| msgid "Requested Employee"
 msgid "Selected Employees"
-msgstr "Demandé Employé"
+msgstr "Employés selectionnés"
 
 #: employee/templates/tabs/asset-request-tab.html:5
 #, fuzzy
 #| msgid "View Stages"
 msgid "View assets"
-msgstr "Voir Étapes"
+msgstr "Voir les ressources"
 
 #: employee/templates/tabs/asset-tab.html:12
 #, fuzzy
@@ -8088,7 +8078,7 @@ msgstr "Férié"
 #: leave/templates/leave/leave_request/request_view.html:139
 #: leave/templates/leave/user_leave/user_request_view.html:75
 msgid "From Date"
-msgstr "Partir de Date"
+msgstr "Date de début"
 
 #: leave/templates/leave/holiday/holiday_export_filter.html:30
 #: leave/templates/leave/holiday/holiday_filter.html:22
@@ -8096,7 +8086,7 @@ msgstr "Partir de Date"
 #: leave/templates/leave/leave_request/request_view.html:146
 #: leave/templates/leave/user_leave/user_request_view.html:82
 msgid "To Date"
-msgstr "À Date"
+msgstr "Date de fin"
 
 #: leave/templates/leave/holiday/holiday_view.html:20
 #: templates/sidebar.html:536
@@ -8232,7 +8222,7 @@ msgstr "Nouvelle Demande Congé"
 #, fuzzy
 #| msgid "Request and Allocation"
 msgid "Reject Leave Allocation Request"
-msgstr "Demande et Allocation"
+msgstr "Refuser la demande d'indemnité d'absence"
 
 #: leave/templates/leave/leave_assign/assign_view.html:12
 #, fuzzy
@@ -8930,9 +8920,7 @@ msgstr "Demande de quart de travail supprimée."
 #, fuzzy
 #| msgid "You cannot delete {employee} shift request for the date {date}."
 msgid "You cannot delete leave request with status {}."
-msgstr ""
-"Vous pouvez  pas supprimer demande {employee} quart travail pore la date "
-"{date}."
+msgstr "Vous pouvez  pas supprimer la demande d'absence"
 
 #: onboarding/forms.py:194
 #: onboarding/templates/onboarding/candidate_creation.html:31
@@ -9205,12 +9193,12 @@ msgstr "Étape du portail d'intégration"
 #: onboarding/templates/onboarding/kanban/kanban.html:86
 #: onboarding/templates/onboarding/onboarding_view.html:126
 msgid "Join Date From"
-msgstr "Date participation à partir"
+msgstr "Date entrée de"
 
 #: onboarding/templates/onboarding/kanban/kanban.html:92
 #: onboarding/templates/onboarding/onboarding_view.html:132
 msgid "Join Date To"
-msgstr "Rejoindre la date à"
+msgstr "Date entrée à"
 
 #: onboarding/templates/onboarding/kanban/kanban.html:119
 #: onboarding/templates/onboarding/onboarding_table.html:95
@@ -9446,8 +9434,7 @@ msgid "Task not found."
 msgstr "indemnités pas trouvé"
 
 #: onboarding/views.py:316
-msgid ""
-"You cannot delete this task because some candidates are associated with it."
+msgid "You cannot delete this task because some candidates are associated with it."
 msgstr "Vous ne pouvez pas supprimer cette tâche car certains candidats y sont associés."
 
 #: onboarding/views.py:342
@@ -9725,7 +9712,7 @@ msgstr "Département  sous contrat"
 
 #: payroll/models/models.py:613
 msgid "Exclude the allowance"
-msgstr "Exclure l'allocation"
+msgstr "Exclure l'indemnité"
 
 #: payroll/models/models.py:614 payroll/models/models.py:932
 msgid "Provide max amount"
@@ -9733,15 +9720,11 @@ msgstr "Fournir le montant max"
 
 #: payroll/models/models.py:629
 msgid "Title of the allowance"
-msgstr "Intitulé de l'allocation"
+msgstr "Intitulé de l'indemnité"
 
 #: payroll/models/models.py:635
-msgid ""
-"The one-time allowance in which the allowance will apply to the "
-"payslips             if the date between the payslip period"
-msgstr ""
-"L'allocation unique dans laquelle l'allocation s'appliquera au fiches de "
-"paie si la date entre la période de la fiche de paie"
+msgid "The one-time allowance in which the allowance will apply to the payslips if the date between the payslip period"
+msgstr "L'allocation unique dans laquelle l'allocation s'appliquera au fiches de paie si la date entre la période de la fiche de paie"
 
 #: payroll/models/models.py:641 payroll/models/models.py:946
 msgid "Include all active employees"
@@ -9749,7 +9732,7 @@ msgstr "Inclure tous les employés actifs"
 
 #: payroll/models/models.py:642
 msgid "Target allowance to all active employees in the company"
-msgstr "Allocation cible à tous les employés actifs de l'entreprise"
+msgstr "Attribue l'indemnité à tous les employés actifs de l'entreprise"
 
 #: payroll/models/models.py:646 payroll/models/models.py:951
 msgid "Employees Specific"
@@ -9764,24 +9747,16 @@ msgid "Exclude Employees"
 msgstr "Exclure les employés"
 
 #: payroll/models/models.py:657
-msgid ""
-"To ignore the allowance to the employees when target them by all "
-"employees             or through condition-based"
-msgstr ""
-"Ignorer l'indemnité aux salariés quand les viser par toussalariés ou par "
-"conditions"
+msgid "To ignore the allowance to the employees when target them by all employees or through condition-based"
+msgstr "Ignorer l'indemnité aux salariés quand les viser par toussalariés ou par conditions"
 
 #: payroll/models/models.py:663
 msgid "This field is used to calculate the taxable allowances"
 msgstr "Ce champ est utilisé pour calculer les abattements imposables"
 
 #: payroll/models/models.py:668
-msgid ""
-"This field is used to target allowance         to the specific employees "
-"when the condition satisfies with the employee's information"
-msgstr ""
-"Ce champ est utilisé pour cibler l'allocation sur les employés "
-"spécifiqueslorsque la condition satisfait aux informations de l'employé"
+msgid "This field is used to target allowance to the specific employees when the condition satisfies with the employee's information"
+msgstr "Ce champ est utilisé pour cibler l'allocation sur les employés spécifiqueslorsque la condition satisfait aux informations de l'employé"
 
 #: payroll/models/models.py:678 payroll/models/models.py:993
 msgid "The related field of the employees"
@@ -9797,13 +9772,11 @@ msgstr "A préciser, l'allowance est fixe ou non"
 
 #: payroll/models/models.py:697
 msgid "Fixed amount for this allowance"
-msgstr "Montant fixe pour cette allocation"
+msgstr "Montant fixe pour cette indemnité"
 
 #: payroll/models/models.py:707
 msgid "If the allowance is not fixed then specifies how the allowance provided"
-msgstr ""
-"Si l'allocation n'est pas fixe, alors précise comment l'allocation est "
-"fournie"
+msgstr "Si l'indemnité n'est pas fixe, alors précise comment l'indemnité est fournie"
 
 #: payroll/models/models.py:716 payroll/models/models.py:1049
 msgid "The percentage of based on"
@@ -9818,12 +9791,8 @@ msgid "The fixed amount for one validated attendance with that shift"
 msgstr "Le montant fixe pour une présence validée avec ce quart de travail"
 
 #: payroll/models/models.py:747
-msgid ""
-"The fixed amount for one hour overtime that are validated             and "
-"approved the overtime attendance"
-msgstr ""
-"Un montant fixe est prévu pour chaque heure supplémentaire approuvée "
-"travaillée."
+msgid "The fixed amount for one hour overtime that are validated and approved the overtime attendance"
+msgstr "Un montant fixe est prévu pour chaque heure supplémentaire approuvée travaillée."
 
 #: payroll/models/models.py:764
 msgid "The fixed amount for one validated attendance with that work type"
@@ -9858,19 +9827,12 @@ msgid "The amount of the pay-head"
 msgstr "Le montant du pay-head"
 
 #: payroll/models/models.py:862
-msgid ""
-"If condition based, all fields (field, value, condition) must be filled."
-msgstr ""
-"Si conditionnel, tous les champs (champ, valeur, condition) doivent être "
-"renseignés."
+#msgid "If condition based, all fields (field, value, condition) must be filled."
+#msgstr "Si conditionnel, tous les champs (champ, valeur, condition) doivent être renseignés."
 
 #: payroll/models/models.py:869
-msgid ""
-"If based on is attendance,                         then per attendance fixed "
-"amount must be filled."
-msgstr ""
-"Si basé sur la fréquentation, alors par présence fixe montant doit être "
-"rempli."
+msgid "If based on is attendance, then per attendance fixed amount must be filled."
+msgstr "Si basé sur la fréquentation, alors par présence fixe montant doit être rempli."
 
 #: payroll/models/models.py:875
 msgid "If based on is shift, then shift must be filled."
@@ -9878,8 +9840,7 @@ msgstr "Si basé sur est shift, alors shift doit être rempli."
 
 #: payroll/models/models.py:878
 msgid "If based on is work type, then work type must be filled."
-msgstr ""
-"Si basé sur le type de travail, alors le type de travail doit être renseigné."
+msgstr "Si basé sur le type de travail, alors le type de travail doit être renseigné."
 
 #: payroll/models/models.py:882
 msgid "Amount should be greater than zero."
@@ -9894,12 +9855,8 @@ msgid "Title of the deduction"
 msgstr "Intitulé de la déduction"
 
 #: payroll/models/models.py:940
-msgid ""
-"The one-time deduction in which the deduction will apply to the "
-"payslips             if the date between the payslip period"
-msgstr ""
-"La déduction unique dans laquelle la déduction s'appliquera à la fiches de "
-"paie si la date entre la période de la fiche de paie"
+msgid "The one-time deduction in which the deduction will apply to the payslips if the date between the payslip period"
+msgstr "La déduction unique dans laquelle la déduction s'appliquera à la fiches de paie si la date entre la période de la fiche de paie"
 
 #: payroll/models/models.py:947
 msgid "Target deduction to all active employees in the company"
@@ -9910,44 +9867,28 @@ msgid "Target deduction to the specific employees"
 msgstr "Cibler la déduction aux employés spécifiques"
 
 #: payroll/models/models.py:962
-msgid ""
-"To ignore the deduction to the employees when target them by all "
-"employees             or through condition-based"
-msgstr ""
-"Ignorer le déduction aux salariés quand les viser par toussalariés ou par "
-"conditions"
+msgid "To ignore the deduction to the employees when target them by all employees or through condition-based"
+msgstr "Ignorer le déduction aux salariés quand les viser par toussalariés ou par conditions"
 
 #: payroll/models/models.py:969
 msgid "To specify the deduction is tax or normal deduction"
 msgstr "Pour spécifier que la déduction est une déduction fiscale ou normale"
 
 #: payroll/models/models.py:975
-msgid ""
-"To find taxable gross,             taxable_gross = (basic_pay + "
-"taxable_deduction)-pre_tax_deductions "
-msgstr ""
-"Pour trouver le brut imposable, taxable_gross = (basic_pay + "
-"taxable_deduction)-pre_tax_deductions "
+msgid "To find taxable gross,taxable_gross = (basic_pay + taxable_deduction)-pre_tax_deductions "
+msgstr "Pour trouver le brut imposable, taxable_gross = (basic_pay + taxable_deduction)-pre_tax_deductions "
 
 #: payroll/models/models.py:983
-msgid ""
-"This field is used to target deduction         to the specific employees "
-"when the condition satisfies with the employee's information"
-msgstr ""
-"Ce champ est utilisé pour cibler la déduction sur les employés "
-"spécifiqueslorsque la condition satisfait aux informations de l'employé"
+msgid "This field is used to target deduction to the specific employees when the condition satisfies with the employee's information"
+msgstr "Ce champ est utilisé pour cibler la déduction sur les employés spécifiqueslorsque la condition satisfait aux informations de l'employé"
 
 #: payroll/models/models.py:1011
 msgid "Basic pay"
 msgstr "Basique salaire"
 
 #: payroll/models/models.py:1017
-msgid ""
-"Update compensation is used to update                    pay-head before any "
-"other deduction calculation starts"
-msgstr ""
-"La compensation de mise à jour est utilisée pour mettre à jour le pay-head "
-"avant toutle calcul d'autres déductions commence"
+msgid "Update compensation is used to update npay-head before any other deduction calculation starts"
+msgstr "La compensation de mise à jour est utilisée pour mettre à jour le pay-head avant toutle calcul d'autres déductions commence"
 
 #: payroll/models/models.py:1023
 msgid "To specify, the deduction is fixed or not"
@@ -9959,9 +9900,7 @@ msgstr "Montant fixe pour cette déduction"
 
 #: payroll/models/models.py:1038
 msgid "If the deduction is not fixed then specifies how the deduction provided"
-msgstr ""
-"Si la déduction n'est pas fixe, alors spécifie comment la déduction est "
-"fournie"
+msgstr "Si la déduction n'est pas fixe, alors spécifie comment la déduction est fournie"
 
 #: payroll/models/models.py:1048
 msgid "Employee rate"
@@ -9985,8 +9924,7 @@ msgstr "Le montant maximum pour ?"
 
 #: payroll/models/models.py:1107
 msgid " Don't choose taxable gross pay when pretax is enabled."
-msgstr ""
-" Ne choisissez pas le salaire brut imposable lorsque la prétaxe est activée."
+msgstr " Ne choisissez pas le salaire brut imposable lorsque la prétaxe est activée."
 
 #: payroll/models/models.py:1113
 msgid " Don't choose net pay when pretax is enabled."
@@ -10001,11 +9939,8 @@ msgid "This fields required"
 msgstr "Ces champs sont obligatoires"
 
 #: payroll/models/models.py:1134
-msgid ""
-"If condition based, all fields                             (field, value, "
-"condition) must be filled."
-msgstr ""
-"Si conditionnel, tous les champs (champ, valeur, condition) doit être rempli."
+msgid "If condition based, all fields (field, value, condition) must be filled."
+msgstr "Si conditionnel, tous les champs (champ, valeur, condition) doit être rempli."
 
 #: payroll/models/models.py:1206
 msgid "The end date must be greater than or equal to the start date"
@@ -10050,23 +9985,23 @@ msgstr "Taux d'imposition"
 #: payroll/templates/payroll/payslip/individual_payslip.html:97
 #: payroll/templates/payroll/payslip/individual_pdf.html:124
 msgid "Allowances"
-msgstr "Allocations"
+msgstr "Indemnités"
 
 #: payroll/templates/payroll/allowance/allowance_empty.html:47
 #: payroll/templates/payroll/allowance/view_allowance.html:124
 msgid "Add Allowance"
-msgstr "Ajouter une allocation"
+msgstr "Ajouter une indemnité"
 
 #: payroll/templates/payroll/allowance/allowance_empty.html:69
 #, fuzzy
 #| msgid "Allowance created."
 msgid "No allowance has been allocated."
-msgstr "Indemnités créé"
+msgstr "Aucune indeminité attribuée"
 
 #: payroll/templates/payroll/allowance/card_allowance.html:40
 #: payroll/templates/payroll/allowance/list_allowance.html:84
 msgid "Do you want to delete this Allowance?"
-msgstr "Voulez-vous supprimer cette allocation ?"
+msgstr "Voulez-vous supprimer cette indemnité ?"
 
 #: payroll/templates/payroll/allowance/filter_allowance.html:19
 #: payroll/templates/payroll/allowance/view_single_allowance.html:31
@@ -10170,7 +10105,7 @@ msgstr "Pour les jours ouvrés sur un mois"
 
 #: payroll/templates/payroll/allowance/view_single_allowance.html:85
 msgid "Allowance Eligibility"
-msgstr "Admissibilité à l'allocation"
+msgstr "Admissibilité à l'indemnité"
 
 #: payroll/templates/payroll/contract/contract_empty.html:6
 #: payroll/templates/payroll/contract/contract_view.html:41
@@ -10661,14 +10596,11 @@ msgstr "indemnités pas trouvé"
 
 #: payroll/views/component_views.py:320
 msgid "Validation error occurred while deleting the allowance"
-msgstr ""
-"Une erreur de validation s'est produite lors de la suppression de "
-"l'indemnité de paie"
+msgstr "Une erreur de validation s'est produite lors de la suppression de l'indemnité de paie"
 
 #: payroll/views/component_views.py:324
 msgid "An error occurred while deleting the allowance"
-msgstr ""
-"Une erreur s'est produite lors de la suppression de l'indemnité de paie"
+msgstr "Une erreur s'est produite lors de la suppression de l'indemnité de paie"
 
 #: payroll/views/component_views.py:340
 msgid "Deduction created."
@@ -12295,7 +12227,7 @@ msgstr "Responsable de recrutement supprimé avec succès."
 #: recruitment/views/dashboard.py:214
 #, python-format
 msgid "Employees joined in %(year)s"
-msgstr "Employés rejoints en %(year)s"
+msgstr "Employés arrivés en %(year)s"
 
 #: recruitment/views/surveys.py:97
 msgid "File size exceeds the limit. Maximum size is 5 MB"
@@ -12423,7 +12355,7 @@ msgstr "Graphique des heures"
 
 #: templates/dashboard.html:312
 msgid "Employees Chart"
-msgstr "Graphique d'employé"
+msgstr "Graphique d'employés"
 
 #: templates/dashboard.html:352
 msgid "Gender Chart"
@@ -12544,7 +12476,7 @@ msgstr "Point d'arrêt de présence"
 
 #: templates/settings.html:130
 msgid "Employee Permission"
-msgstr "Autorisation des employés"
+msgstr "Autorisation de l'employé"
 
 #: templates/settings.html:138
 msgid "User Group"
