@@ -14,9 +14,11 @@ services:
       SECRET_KEY: ${SECRET_KEY}
       CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS}
     command: ./entrypoint.sh
-volumes:
-  horilla-data:
+    volumes:
+      - horilla-vol:/app
 networks:
   app_network:
     external: true
     name: app_network
+volumes:
+  horilla-vol:
