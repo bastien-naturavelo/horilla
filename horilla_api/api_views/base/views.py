@@ -34,17 +34,16 @@ from base.views import (
     work_type_request_export,
 )
 from employee.models import Actiontype, Employee
-from horilla.decorators import permission_required
 from notifications.signals import notify
 
 from ...api_decorators.base.decorators import (
     check_approval_status,
     manager_or_owner_permission_required,
     manager_permission_required,
+    permission_required,
 )
 from ...api_methods.base.methods import groupby_queryset, permission_based_queryset
 from ...api_serializers.base.serializers import (
-    ActiontypeSerializer,
     CompanySerializer,
     DepartmentSerializer,
     EmployeeShiftScheduleSerializer,
@@ -510,63 +509,6 @@ class WorkTypeRequestExport(APIView):
         return work_type_request_export(request)
 
 
-class RotatingWorkTypeView(APIView):
-
-    serializer_class = RotatingWorkTypeSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self, request):
-        queryset = RotatingWorkType.objects.all()
-        user = request.user
-        # checking user level permissions
-        perm = "base.view_rotatingworktype"
-        queryset = permission_based_queryset(user, perm, queryset)
-        return queryset
-
-    def get(self, request, pk=None):
-        if pk:
-            rotating_work_type = object_check(RotatingWorkType, pk)
-            if rotating_work_type is None:
-                return Response({"error": "RotatingWorkType not found"}, status=404)
-            serializer = self.serializer_class(rotating_work_type)
-            return Response(serializer.data, status=200)
-
-        rotating_work_types = self.get_queryset(request)
-        serializer = self.serializer_class(rotating_work_types, many=True)
-        return Response(serializer.data, status=200)
-
-    @method_decorator(permission_required("base.add_rotatingworktype"), name="dispatch")
-    def post(self, request):
-        serializer = self.serializer_class(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
-
-    @method_decorator(
-        permission_required("base.change_rotatingworktype"), name="dispatch"
-    )
-    def put(self, request, pk):
-        rotating_work_type = object_check(RotatingWorkType, pk)
-        if rotating_work_type is None:
-            return Response({"error": "RotatingWorkType not found"}, status=404)
-        serializer = self.serializer_class(rotating_work_type, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=200)
-        return Response(serializer.errors, status=400)
-
-    @method_decorator(
-        permission_required("base.delete_rotatingworktype"), name="dispatch"
-    )
-    def delete(self, request, pk):
-        rotating_work_type = object_check(RotatingWorkType, pk)
-        if rotating_work_type is None:
-            return Response({"error": "RotatingWorkType not found"}, status=404)
-        response, status_code = object_delete(RotatingWorkType, pk)
-        return Response(response, status=status_code)
-
-
 class IndividualRotatingWorktypesView(APIView):
     serializer_class = RotatingWorkTypeAssignSerializer
     permission_classes = [IsAuthenticated]
@@ -597,9 +539,23 @@ class RotatingWorkTypeAssignView(APIView):
     filterset_class = RotatingWorkTypeAssignFilter
     permission_classes = [IsAuthenticated]
 
+    def _permission_check(self, request, obj=None, pk=None):
+        if pk:
+            employee = request.user.employee_get
+            manager = obj.employee_id.get_reporting_manager()
+            if (
+                employee == obj.employee_id
+                or manager == employee
+                or request.user.has_perm("base.view_rotatingworktypeassign")
+            ):
+                return True
+            return False
+
     @manager_permission_required("base.view_rotatingworktypeassign")
     def get(self, request, pk=None):
+
         if pk:
+
             rotating_work_type_assign = object_check(RotatingWorkTypeAssign, pk)
             if rotating_work_type_assign is None:
                 return Response(
@@ -1027,9 +983,7 @@ class RotatingWorkTypeView(APIView):
     serializer_class = RotatingWorkTypeSerializer
     permission_classes = [IsAuthenticated]
 
-    @method_decorator(
-        permission_required("base.view_rotatingworktype"), name="dispatch"
-    )
+    @method_decorator(permission_required("base.view_rotatingworktype"))
     def get(self, request, pk=None):
         if pk:
             rotating_work_type = object_check(RotatingWorkType, pk)
@@ -1262,48 +1216,6 @@ class RotatingShiftAssignBulkDelete(APIView):
             return Response({"error": str(E)}, status=400)
 
 
-class ActiontypeView(APIView):
-    serializer_class = ActiontypeSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request, pk=None):
-        if pk:
-            action_type = object_check(Actiontype, pk)
-            if action_type is None:
-                return Response({"error": "Actiontype not found"}, status=404)
-            serializer = self.serializer_class(action_type)
-            return Response(serializer.data, status=200)
-        action_types = Actiontype.objects.all()
-        paginater = PageNumberPagination()
-        page = paginater.paginate_queryset(action_types, request)
-        serializer = self.serializer_class(page, many=True)
-        return paginater.get_paginated_response(serializer.data)
-
-    def post(self, request):
-        serializer = self.serializer_class(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
-
-    def put(self, request, pk):
-        action_type = object_check(Actiontype, pk)
-        if action_type is None:
-            return Response({"error": "Actiontype not found"}, status=404)
-        serializer = self.serializer_class(action_type, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=200)
-        return Response(serializer.errors, status=400)
-
-    def delete(self, request, pk):
-        action_type = object_check(Actiontype, pk)
-        if action_type is None:
-            return Response({"error": "Actiontype not found"}, status=404)
-        response, status_code = object_delete(Actiontype, pk)
-        return Response(response, status=status_code)
-
-
 class RotatingWorKTypePermissionCheck(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -1334,7 +1246,7 @@ class WorktypeRequestApprovePermissionCheck(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        instance = request.user.employee_get
+        instance = Employee.objects.filter(id=request.GET.get("employee_id")).first()
         if (
             _is_reportingmanger(request, instance)
             or request.user.has_perm("approve_shiftrequest")
@@ -1348,7 +1260,7 @@ class ShiftRequestApprovePermissionCheck(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        instance = request.user.employee_get
+        instance = Employee.objects.filter(id=request.GET.get("employee_id")).first()
         if (
             _is_reportingmanger(request, instance)
             or request.user.has_perm("approve_shiftrequest")
@@ -1362,9 +1274,22 @@ class EmployeeTabPermissionCheck(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        instance = request.user.employee_get
+
+        instance = Employee.objects.filter(id=request.GET.get("employee_id")).first()
         if _is_reportingmanger(request, instance) or request.user.has_perms(
-            ["attendance.view_worktyperequest", "perms.attendance.view_shiftrequest"]
+            [
+                "view.view_worktyperequest",
+                "attendance.view_shiftrequest",
+                "employee.change_employee",
+            ]
         ):
             return Response(status=200)
-        return Response(status=400)
+        return Response({"message": "No permission"}, status=400)
+
+
+class CheckUserLevel(APIView):
+    def get(self, request):
+        perm = request.GET.get("perm")
+        if request.user.has_perm(perm):
+            return Response(status=200)
+        return Response({"error": "No permission"}, status=400)

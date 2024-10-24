@@ -1,4 +1,3 @@
-from django.contrib.auth.decorators import permission_required
 from django.db.models import ProtectedError, Q
 from django.http import Http404
 from django.utils.decorators import method_decorator
@@ -15,6 +14,7 @@ from employee.filters import (
     EmployeeFilter,
 )
 from employee.models import (
+    Actiontype,
     DisciplinaryAction,
     Employee,
     EmployeeBankDetails,
@@ -24,6 +24,8 @@ from employee.models import (
 )
 from employee.views import work_info_export, work_info_import
 from horilla.decorators import owner_can_enter
+from horilla_api.api_decorators.base.decorators import permission_required
+from horilla_api.api_methods.employee.methods import get_next_badge_id
 from horilla_documents.models import Document, DocumentRequest
 from notifications.signals import notify
 
@@ -34,6 +36,7 @@ from ...api_decorators.base.decorators import (
 from ...api_decorators.employee.decorators import or_condition
 from ...api_methods.base.methods import groupby_queryset, permission_based_queryset
 from ...api_serializers.employee.serializers import (
+    ActiontypeSerializer,
     DisciplinaryActionSerializer,
     DocumentRequestSerializer,
     DocumentSerializer,
@@ -45,6 +48,26 @@ from ...api_serializers.employee.serializers import (
     EmployeeWorkInformationSerializer,
     PolicySerializer,
 )
+
+
+def permission_check(request, perm):
+    return request.user.has_perm(perm)
+
+
+def object_check(cls, pk):
+    try:
+        obj = cls.objects.get(id=pk)
+        return obj
+    except cls.DoesNotExist:
+        return None
+
+
+def object_delete(cls, pk):
+    try:
+        cls.objects.get(id=pk).delete()
+        return "", 200
+    except Exception as e:
+        return {"error": str(e)}, 400
 
 
 class EmployeeTypeAPIView(APIView):
@@ -89,7 +112,6 @@ class EmployeeAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, pk=None):
-
         if pk:
             try:
                 employee = Employee.objects.get(pk=pk)
@@ -98,26 +120,22 @@ class EmployeeAPIView(APIView):
                     {"error": "Employee does not exist"},
                     status=status.HTTP_404_NOT_FOUND,
                 )
-
             serializer = EmployeeSerializer(employee)
             return Response(serializer.data)
-
         paginator = PageNumberPagination()
         employees_queryset = Employee.objects.all()
         employees_filter_queryset = self.filterset_class(
             request.GET, queryset=employees_queryset
         ).qs
-
         field_name = request.GET.get("groupby_field", None)
         if field_name:
             url = request.build_absolute_uri()
             return groupby_queryset(request, url, field_name, employees_filter_queryset)
-
         page = paginator.paginate_queryset(employees_filter_queryset, request)
         serializer = EmployeeSerializer(page, many=True)
         return paginator.get_paginated_response(serializer.data)
 
-    @manager_permission_required("employee.change_employee")
+    @method_decorator(permission_required("employee.add_employee"))
     def post(self, request):
         serializer = EmployeeSerializer(data=request.data)
         if serializer.is_valid():
@@ -128,14 +146,10 @@ class EmployeeAPIView(APIView):
     def put(self, request, pk):
         user = request.user
         employee = Employee.objects.get(pk=pk)
-        is_manager = EmployeeWorkInformation.objects.filter(
-            reporting_manager_id=user.employee_get
-        ).first()
         if (
-            employee == user.employee_get
-            or is_manager
-            or user.has_perm("employee.change_employee")
-        ):
+            employee
+            in [user.employee_get, request.user.employee_get.get_reporting_manager()]
+        ) or user.has_perm("employee.change_employee"):
             serializer = EmployeeSerializer(employee, data=request.data, partial=True)
             if serializer.is_valid():
                 serializer.save()
@@ -215,22 +229,18 @@ class EmployeeBankDetailsAPIView(APIView):
         return queryset
 
     def get(self, request, pk=None):
-        if pk:
-            try:
-                bank_detail = EmployeeBankDetails.objects.get(pk=pk)
-            except EmployeeBankDetails.DoesNotExist:
-                return Response(
-                    {"error": "Bank details do not exist"},
-                    status=status.HTTP_404_NOT_FOUND,
-                )
-
+        bank_detail = EmployeeBankDetails.objects.get(pk=pk)
+        if (
+            request.user.employee_get
+            in [
+                bank_detail.employee_id,
+                bank_detail.employee_id.get_reporting_manager(),
+            ]
+        ) or request.user.has_perm("employee.view_employeebankdetails"):
             serializer = EmployeeBankDetailsSerializer(bank_detail)
             return Response(serializer.data)
-        paginator = PageNumberPagination()
-        employee_bank_details = self.get_queryset(request)
-        page = paginator.paginate_queryset(employee_bank_details, request)
-        serializer = EmployeeBankDetailsSerializer(page, many=True)
-        return paginator.get_paginated_response(serializer.data)
+
+        return Response({"message": "No permission"}, status=400)
 
     @manager_or_owner_permission_required(
         EmployeeBankDetails, "employee.add_employeebankdetails"
@@ -296,8 +306,13 @@ class EmployeeWorkInformationAPIView(APIView):
 
     def get(self, request, pk):
         work_info = EmployeeWorkInformation.objects.get(pk=pk)
-        serializer = EmployeeWorkInformationSerializer(work_info)
-        return Response(serializer.data)
+        if (
+            request.user.employee_get
+            in [work_info.employee_id, work_info.reporting_manager_id]
+        ) or request.user.has_perm("employee.view_employeeworkinformation"):
+            serializer = EmployeeWorkInformationSerializer(work_info)
+            return Response(serializer.data, status=200)
+        return Response({"message": "No permission"}, status=400)
 
     @manager_permission_required("employee.add_employeeworkinformation")
     def post(self, request):
@@ -309,17 +324,19 @@ class EmployeeWorkInformationAPIView(APIView):
 
     @manager_permission_required("employee.change_employeeworkinformation")
     def put(self, request, pk):
-        try:
-            work_info = EmployeeWorkInformation.objects.get(pk=pk)
-        except EmployeeWorkInformation.DoesNotExist:
-            raise Http404
-        serializer = EmployeeWorkInformationSerializer(
-            work_info, data=request.data, partial=True
-        )
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        work_info = EmployeeWorkInformation.objects.get(pk=pk)
+        if (
+            request.user.employee_get == work_info.reporting_manager_id
+            or request.user.has_perm("employee.change_employeeworkinformation")
+        ):
+            serializer = EmployeeWorkInformationSerializer(
+                work_info, data=request.data, partial=True
+            )
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"message": "No permission"}, status=400)
 
     @method_decorator(
         permission_required("employee.delete_employeeworkinformation"), name="dispatch"
@@ -409,6 +426,54 @@ class EmployeeBulkUpdateView(APIView):
         return Response({"status": "success"}, status=200)
 
 
+class ActiontypeView(APIView):
+    serializer_class = ActiontypeSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk=None):
+        if pk:
+            action_type = object_check(Actiontype, pk)
+            if action_type is None:
+                return Response({"error": "Actiontype not found"}, status=404)
+            serializer = self.serializer_class(action_type)
+            return Response(serializer.data, status=200)
+        action_types = Actiontype.objects.all()
+        paginater = PageNumberPagination()
+        page = paginater.paginate_queryset(action_types, request)
+        serializer = self.serializer_class(page, many=True)
+        return paginater.get_paginated_response(serializer.data)
+
+    def post(self, request):
+        if permission_check(request, "employee.add_actiontype") is False:
+            return Response({"error": "No permission"}, status=401)
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+
+    def put(self, request, pk):
+        if permission_check(request, "employee.change_actiontype") is False:
+            return Response({"error": "No permission"}, status=401)
+        action_type = object_check(Actiontype, pk)
+        if action_type is None:
+            return Response({"error": "Actiontype not found"}, status=404)
+        serializer = self.serializer_class(action_type, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=200)
+        return Response(serializer.errors, status=400)
+
+    def delete(self, request, pk):
+        if permission_check(request, "employee.delete_actiontype") is False:
+            return Response({"error": "No permission"}, status=401)
+        action_type = object_check(Actiontype, pk)
+        if action_type is None:
+            return Response({"error": "Actiontype not found"}, status=404)
+        response, status_code = object_delete(Actiontype, pk)
+        return Response(response, status=status_code)
+
+
 class DisciplinaryActionAPIView(APIView):
     """
     Endpoint for managing disciplinary actions.
@@ -441,12 +506,44 @@ class DisciplinaryActionAPIView(APIView):
 
     def get(self, request, pk=None):
         if pk:
+            employee = request.user.employee_get
             disciplinary_action = self.get_object(pk)
-            serializer = DisciplinaryActionSerializer(disciplinary_action)
-            return Response(serializer.data, status=200)
+            is_manager = (
+                True
+                if employee.get_subordinate_employees()
+                & disciplinary_action.employee_id.all()
+                else False
+            )
+            if (
+                (employee == disciplinary_action.employee_id)
+                or is_manager
+                or request.user.has_perm("employee.view_disciplinaryaction")
+            ):
+                serializer = DisciplinaryActionSerializer(disciplinary_action)
+                return Response(serializer.data, status=200)
+            return Response({"error": "No permission"}, status=400)
         else:
+            employee = request.user.employee_get
+            is_manager = EmployeeWorkInformation.objects.filter(
+                reporting_manager_id=employee
+            ).exists()
+            subordinates = employee.get_subordinate_employees()
+
+            if request.user.has_perm("employee.view_disciplinaryaction"):
+                queryset = DisciplinaryAction.objects.all()
+            elif is_manager:
+                queryset_subordinates = DisciplinaryAction.objects.filter(
+                    employee_id__in=subordinates
+                )
+                queryset_employee = DisciplinaryAction.objects.filter(
+                    employee_id=employee
+                )
+                queryset = queryset_subordinates | queryset_employee
+            else:
+                queryset = DisciplinaryAction.objects.filter(employee_id=employee)
+
             paginator = PageNumberPagination()
-            disciplinary_actions = DisciplinaryAction.objects.all()
+            disciplinary_actions = queryset
             disciplinary_action_filter_queryset = self.filterset_class(
                 request.GET, queryset=disciplinary_actions
             ).qs
@@ -457,6 +554,8 @@ class DisciplinaryActionAPIView(APIView):
             return paginator.get_paginated_response(serializer.data)
 
     def post(self, request):
+        if permission_check(request, "employee.add_disciplinaryaction") is False:
+            return Response({"error": "No permission"}, status=401)
         serializer = DisciplinaryActionSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -464,6 +563,8 @@ class DisciplinaryActionAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, pk):
+        if permission_check(request, "employee.add_disciplinaryaction") is False:
+            return Response({"error": "No permission"}, status=401)
         disciplinary_action = self.get_object(pk)
         serializer = DisciplinaryActionSerializer(
             disciplinary_action, data=request.data
@@ -474,6 +575,8 @@ class DisciplinaryActionAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):
+        if permission_check(request, "employee.add_disciplinaryaction") is False:
+            return Response({"error": "No permission"}, status=401)
         disciplinary_action = self.get_object(pk)
         disciplinary_action.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -526,6 +629,9 @@ class PolicyAPIView(APIView):
             return paginator.get_paginated_response(serializer.data)
 
     def post(self, request):
+        if permission_check(request, "employee.add_policy") is False:
+            return Response({"error": "No permission"}, status=401)
+
         serializer = PolicySerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -533,6 +639,8 @@ class PolicyAPIView(APIView):
         return Response(serializer.errors, status=400)
 
     def put(self, request, pk):
+        if permission_check(request, "employee.change_policy") is False:
+            return Response({"error": "No permission"}, status=401)
         policy = self.get_object(pk)
         serializer = PolicySerializer(policy, data=request.data)
         if serializer.is_valid():
@@ -541,6 +649,8 @@ class PolicyAPIView(APIView):
         return Response(serializer.errors, status=400)
 
     def delete(self, request, pk):
+        if permission_check(request, "employee.delete_policy") is False:
+            return Response({"error": "No permission"}, status=401)
         policy = self.get_object(pk)
         policy.delete()
         return Response(status=204)
@@ -622,9 +732,7 @@ class DocumentRequestAPIView(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    @method_decorator(
-        permission_required("employee.delete_employee", raise_exception=True)
-    )
+    @method_decorator(permission_required("employee.delete_employee"))
     def delete(self, request, pk):
         document_request = self.get_object(pk)
         document_request.delete()
@@ -734,9 +842,7 @@ class DocumentBulkApproveRejectAPIView(APIView):
 class EmployeeBulkArchiveView(APIView):
     permission_classes = [IsAuthenticated]
 
-    @method_decorator(
-        permission_required("employee.delete_employee", raise_exception=True)
-    )
+    @method_decorator(permission_required("employee.delete_employee"))
     def post(self, request, is_active):
         ids = request.data.get("ids")
         error = []
@@ -758,9 +864,7 @@ class EmployeeBulkArchiveView(APIView):
 class EmployeeArchiveView(APIView):
     permission_classes = [IsAuthenticated]
 
-    @method_decorator(
-        permission_required("employee.delete_employee", raise_exception=True)
-    )
+    @method_decorator(permission_required("employee.delete_employee"))
     def post(self, request, id, is_active):
         employee = Employee.objects.get(id=id)
         employee.is_active = is_active

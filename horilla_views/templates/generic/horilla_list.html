@@ -203,13 +203,13 @@
               <div class="oh-btn-group">
                 {% for action in actions %}
                   {% if action.accessibility|accessibility:instance %}
-                  <a
+                  <button
                     href="#"
                     title="{{action.action|safe}}"
                     {{action.attrs|format:instance|safe}}
                   >
                     <ion-icon name="{{action.icon}}"></ion-icon>
-                  </a>
+              </button>
                   {% endif %}
                 {% endfor %}
               </div>

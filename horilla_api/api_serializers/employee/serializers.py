@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from base.models import Department, EmployeeType, JobPosition
 from employee.models import (
+    Actiontype,
     DisciplinaryAction,
     Employee,
     EmployeeBankDetails,
@@ -11,6 +12,12 @@ from employee.models import (
 from horilla_documents.models import Document, DocumentRequest
 
 from ...api_methods.employee.methods import get_next_badge_id
+
+
+class ActiontypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Actiontype
+        fields = ["id", "title", "action_type"]
 
 
 class EmployeeListSerializer(serializers.ModelSerializer):
@@ -85,7 +92,10 @@ class EmployeeWorkInformationSerializer(serializers.ModelSerializer):
     tags = serializers.SerializerMethodField()
 
     def get_tags(self, obj):
-        return [{"id": tag.id, "title": tag.title} for tag in obj.tags.all()]
+        return [
+            {"id": tag.id, "title": tag.title, "color": tag.color}
+            for tag in obj.tags.all()
+        ]
 
     class Meta:
         model = EmployeeWorkInformation

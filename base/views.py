@@ -143,7 +143,12 @@ from base.models import (
 )
 from employee.filters import EmployeeFilter
 from employee.forms import ActiontypeForm
-from employee.models import Actiontype, Employee, EmployeeWorkInformation
+from employee.models import (
+    Actiontype,
+    DisciplinaryAction,
+    Employee,
+    EmployeeWorkInformation,
+)
 from horilla.decorators import (
     delete_permission,
     duplicate_permission,
@@ -230,6 +235,8 @@ def load_demo_database(request):
                     "leave": "leave_data.json",
                     "asset": "asset_data.json",
                     "recruitment": "recruitment_data.json",
+                    "onboarding": "onboarding_data.json",
+                    "offboarding": "offboarding_data.json",
                     "pms": "pms_data.json",
                     "payroll": "payroll_data.json",
                 }
@@ -1216,6 +1223,7 @@ def object_delete(request, obj_id, **kwargs):
     """
     model = kwargs.get("model")
     redirect_path = kwargs.get("redirect_path")
+    delete_error = False
     try:
         instance = model.objects.get(id=obj_id)
         instance.delete()
@@ -1223,6 +1231,7 @@ def object_delete(request, obj_id, **kwargs):
             request, _("The {} has been deleted successfully.").format(instance)
         )
     except model.DoesNotExist:
+        delete_error = True
         messages.error(request, _("{} not found.").format(model._meta.verbose_name))
     except ProtectedError as e:
         model_verbose_names_set = set()
@@ -1230,6 +1239,7 @@ def object_delete(request, obj_id, **kwargs):
             model_verbose_names_set.add(_(obj._meta.verbose_name.capitalize()))
 
         model_names_str = ", ".join(model_verbose_names_set)
+        delete_error = True
         messages.error(
             request,
             _("This {} is already in use for {}.").format(instance, model_names_str),
@@ -1249,6 +1259,13 @@ def object_delete(request, obj_id, **kwargs):
         previous_data = request.GET.urlencode()
         redirect_path = redirect_path + "?" + previous_data
         return redirect(redirect_path)
+    elif kwargs.get("HttpResponse"):
+        return_part = (
+            "<script>window.location.reload()</script>"
+            if delete_error
+            else kwargs.get("HttpResponse")
+        )
+        return HttpResponse(f"{return_part}")
     else:
         return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
 
@@ -6092,11 +6109,22 @@ def action_type_delete(request, act_id):
     """
     This method is used to delete the action type.
     """
-    Actiontype.objects.filter(id=act_id).delete()
-    message = _("Action has been deleted successfully!")
-    return HttpResponse(
-        f"<div class='oh-wrapper'> <div class='oh-alert-container'> <div class='oh-alert oh-alert--animated oh-alert--success'>{message}</div></div></div>"
-    )
+    if DisciplinaryAction.objects.filter(action=act_id).exists():
+
+        messages.error(
+            request,
+            _(
+                "This action type is in use in disciplinary actions and cannot be deleted."
+            ),
+        )
+        return HttpResponse("<script>window.location.reload()</script>")
+
+    else:
+        Actiontype.objects.filter(id=act_id).delete()
+        message = _("Action has been deleted successfully!")
+        return HttpResponse(
+            f"<div class='oh-wrapper'> <div class='oh-alert-container'> <div class='oh-alert oh-alert--animated oh-alert--success'>{message}</div></div></div>"
+        )
 
 
 @login_required
